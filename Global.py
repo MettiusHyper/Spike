@@ -14,7 +14,7 @@ logger.addHandler(handler)
 collection = pymongo.MongoClient(os.environ['MONGO'])["Bots"]["SpikeDatabase"]
 
 class Data:
-    version = "v. 1.3.0"
+    version = "0.1.0"
     prefix = "s!"
     default_color = 0x177e45
     empty_color = 0x2f3136
@@ -27,7 +27,6 @@ class Emoji:
     tick = "<a:tick:763083389217144852>"
     cross = "<a:across:763083473396301854>"
     ban = ":hammer:"
-    loading = "<a:loading:768131762274041898>"
     ping_pong = ":ping_pong:"
     warning = ":warning:"
     warn = ":radioactive:"
@@ -45,13 +44,12 @@ class Emoji:
     bug = "<:bug:772133734841057321>"
     discordLogo = "<:discord_logo:772138358641524817>"
     website = "<:website:768128391256866817>"
-    heroku_logo = "<:herokulogo:755156101108072500>"
     members = "<:members:772528856187666443>"
     boost = "<:boost:772528846775648258>"
     channels = "<:channels:772528907156586537>"
     owner = "<:owner:772528832804290620>"
     clear = ":soap:"
-    help = "<:info:742771520773947462>"
+    help = "<:info:838005178287915059>"
     setup = ":gear:"
     pencil = ":pencil:"
 

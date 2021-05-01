@@ -42,7 +42,7 @@ class Basic(commands.Cog):
                 color = Functions.color(ctx),
                 description = "This is a very simple moderation bot, with some other very useful features\nand its also hugely customisable."
             )
-            .add_field(name = "Version {emoji}".format(emoji = Emoji.version), value = Data.version)
+            .add_field(name = "Version {emoji}".format(emoji = Emoji.version), value = f"v. {Data.version}")
             .add_field(name = "Servers {emoji}".format(emoji = Emoji.online), value = "{bot}'s in {guilds} servers".format(bot = self.client.user.name, guilds = len(self.client.guilds)))
             .add_field(name = "Developer {emoji}".format(emoji = Emoji.botdev), value = self.client.get_user(707165674845241344).mention)
             .add_field(name = "Bot Invite {emoji}".format(emoji = Emoji.bot), value = "[Click here to invite me]({invite})".format(invite = Data.invite_link))
