@@ -2,5 +2,4 @@ discord.py
 pymongo
 dnspython
 requests
-pypertrail
-dbl
+dblpy
