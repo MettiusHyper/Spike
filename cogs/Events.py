@@ -2,6 +2,7 @@ import discord
 import traceback
 
 from discord.ext import commands
+from discord.ext.commands import errors
 from Global import Emoji, logger, collection, Data, Functions
 
 async def errorFormat(client, exception):
@@ -21,6 +22,9 @@ class Events(commands.Cog):
         if isinstance(exception, commands.MemberNotFound):
             return await ctx.send("{cross} I couldn't find this member".format(cross = Emoji.cross))
 
+        elif isinstance(exception, commands.CommandNotFound):
+            return
+
         elif isinstance(exception, commands.UserNotFound):
             return await ctx.send("{cross} I couldn't find this user".format(cross = Emoji.cross))
 
@@ -29,9 +33,11 @@ class Events(commands.Cog):
                 return await ctx.send("{cross} Please specify a valid member".format(cross = Emoji.cross))
             elif ctx.command == self.client.get_command("status"):
                 return await ctx.send("{cross} Specify the arguments for the status command `%status [online, dnd, idle] [playing, listening, watching] [name]`".format(cross = Emoji.cross))
+
         elif isinstance(exception, commands.MissingPermissions):
             if ctx.command == self.client.get_command("ban") or ctx.command == self.client.get_command("unban"):
                 return await ctx.send("{cross} You don't have the required permissions (Ban Members)".format(cross = Emoji.cross))
+
         elif isinstance(exception, commands.DisabledCommand):
             return await ctx.send("{cross} This command is currently disabled, try again later".format(cross = Emoji.cross))
         await errorFormat(self.client, exception)

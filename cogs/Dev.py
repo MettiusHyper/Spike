@@ -1,8 +1,9 @@
 import os
 import ast
+import requests
+import datetime
 
 from discord.ext import commands
-from pypertrail.search import Search
 from Global import Emoji, Functions, collection
 
 def insert_returns(body):
@@ -68,19 +69,16 @@ class Dev(commands.Cog):
     async def logs(self, ctx):
         if Functions.isDev(ctx.author) == True:
             async with ctx.channel.typing():
-                #gathering the logs
-                search = Search(os.environ['PAPERTRAIL_API_TOKEN'])
-                data = search.events()
-                
-                #formatting
+                request = requests.get(
+                    "https://papertrailapp.com/api/v1/events/search.json?limit=20",
+                    headers={"X-Papertrail-Token": "JROjRVUXPCT4gZhcyvIE"})
+                data = request.json()["events"]
+                data.reverse()
                 logs = ""
-                for event in data["events"]:
+                for el in data:
                     if len(logs) <= 1994:
-                        if logs == None:
-                            logs = event['message']
-                        else:
-                            logs += event["message"]
-                logs = logs[:1991] + "..."
+                        logs += f"{datetime.datetime.strptime(el['generated_at'][:-6], '%Y-%m-%dT%H:%M:%S').strftime('%d/%m %H:%M:%S')} | {el['message']}"
+                logs = logs[-1991:] + "..."
                 #more formatting
                 for word in logs:
                     if word.endswith("@gmail.com"):
