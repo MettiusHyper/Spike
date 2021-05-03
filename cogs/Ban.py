@@ -76,7 +76,7 @@ class Ban(commands.Cog):
 
             # ctx message
             return await ctx.send("{unban} {member}(`{memberId}`) has been unbanned from the server.".format(unban = Emoji.unban, member = member, memberId = member.id))
-            
+
         await ctx.send("{cross} This user is not banned in this server.".format(cross = Emoji.cross))
 
 def setup(client):

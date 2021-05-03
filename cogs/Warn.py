@@ -17,7 +17,7 @@ class Warn(commands.Cog):
         #role check, so that moderators can't warn administrators
         if ctx.author.top_role < member.top_role:
             return await ctx.send("{cross} You can't warn someone that has an higher role than yours.".format(cross = Emoji.cross))
-        
+
         #generating id
         warnId = str(uuid.uuid4())[:18]
 
@@ -47,7 +47,7 @@ class Warn(commands.Cog):
                     ]
                 }
             })
-        
+
         #updating the database
         collection.update_one({"_id": ctx.guild.id}, {"$set": {"members" : data}})
 
@@ -71,7 +71,7 @@ class Warn(commands.Cog):
             )
         except:
             pass
-        
+
         #sends a confirmation message in ctx
         await ctx.send("{warn} {member}(`{memberId}`) has been warned succesfully.".format(warn = Emoji.warn, member = member, memberId = member.id))
         
@@ -97,21 +97,21 @@ class Warn(commands.Cog):
             el = dbMember["warns"][-1]
             dbMember["warns"].pop()
             data.update({str(member.id) : dbMember})
-        
+
         #if an id is specified tries to find it in the database
         else:
             for el in dbMember["warns"]:
                 if el["id"] == warnId:
                     dbMember["warns"].pop(dbMember["warns"].index(el))
                     data.update({str(member.id) : dbMember})
-                
+
         #if nothing has changed it means that didn't find the specified id
         if data == collection.find_one({"_id" : ctx.guild.id})["members"]:
             return await ctx.send("{cross} Couldn't find the specified warn id.".format(cross = Emoji.cross))
 
         #updating database
         collection.update_one({"_id": ctx.guild.id}, {"$set": {"members" : data}})
-        
+
         #sends a dm to the user
         try:
             await member.send(
@@ -132,7 +132,7 @@ class Warn(commands.Cog):
             )
         except:
             pass
-        
+
         #sends a confirmation message in ctx
         await ctx.send("{warn} the warn with id {Id} ha been removed from {member}(`{memberId}`).".format(warn = Emoji.warn, member = member, memberId = member.id, Id = el["id"]))
 

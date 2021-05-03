@@ -41,16 +41,11 @@ class Dev(commands.Cog):
 
             try:
                 fn_name = "_eval_expr"
-
                 body = f"async def {fn_name}():\n{code}"
-
                 parsed = ast.parse(body)
                 body = parsed.body[0].body
-
                 insert_returns(body)
-
                 exec(compile(parsed, filename="<ast>", mode="exec"), env)
-
                 result = (await eval(f"{fn_name}()", env))
             except Exception as e:
                 return await ctx.send(python.format(type(e).__name__ + ': ' + str(e)))
@@ -59,7 +54,7 @@ class Dev(commands.Cog):
                 result = str(result)
             except:
                 pass
-            
+
             await ctx.message.add_reaction(Emoji.tick)
             while len(result) > 0:
                 await ctx.send(python.format(result[:1988]))

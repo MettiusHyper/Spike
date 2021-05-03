@@ -9,7 +9,7 @@ class TopGG(commands.Cog):
         self.client = client
         self.token = os.environ["DSL_TOKEN"]
         self.dblpy = dbl.DBLClient(self.client, self.token, autopost=True)
-    
+
     @commands.Cog.listener()
     async def on_guild_post(self):
         channel = self.client.get_channel(748894459118354532)

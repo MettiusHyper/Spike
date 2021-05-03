@@ -57,7 +57,7 @@ class Functions:
     def dmEmbed(ctx, title, description, reason):
         if reason == None:
             reason = "No reason provided"
-        
+
         embed = discord.Embed(
             title = title,
             description = description,
@@ -74,7 +74,7 @@ class Functions:
                 pass
 
         return embed
-    
+
     def logEmbed(ctx, title, staff, member, reason, Id = None):
         if reason == None:
             reason = "No reason provided"
@@ -111,14 +111,14 @@ class Functions:
             if ban_entry.user.id == member.id:
                 banned = True
         return banned
-    
+
     async def banReason(ctx, member):
         banned_users = await ctx.guild.bans()
         for ban_entry in banned_users:
             if ban_entry.user.id == member.id:
                 return ban_entry.reason
         return None
-    
+
     async def sendEmbed(ctx, embed):
         try:
             await ctx.send(embed = embed)
@@ -146,7 +146,7 @@ class Functions:
         else:
             CustomActivity = discord.Activity(type = activity[data["type"]], name = data["name"]) 
         await client.change_presence(status = status[data["status"]], activity = CustomActivity)
-    
+
     def prefixEmbed(self, message):
         prefix = Dev.prefix(self.client, message)[1]
         embed = discord.Embed(colour = Functions.color(message), description = "For {guild} server the prefix is **{p}**\n\nUse `{p}help` for more help.".format(guild = message.guild, p = prefix))

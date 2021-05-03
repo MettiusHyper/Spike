@@ -7,7 +7,7 @@ from Global import Data, collection, Commands, Emoji, Functions, Dev
 class Basic(commands.Cog):
     def __init__(self, client):
         self.client = client
-    
+
     @commands.command(name = Commands.Ping["name"], description = Commands.Ping["description"], aliases = Commands.Ping["aliases"], enabled = collection.find_one({"_id":"developer"})["commands"])
     async def ping(self, ctx):
         #ping of the database
@@ -31,7 +31,7 @@ class Basic(commands.Cog):
                 .format(pong = Emoji.ping_pong, ping = round(self.client.latency*1000), message = Emoji.message, mPing = messagePing, db = Emoji.mongodb, dPing = dbPing)
             )
         )
-    
+
     @commands.command(name = Commands.Info["name"], description = Commands.Info["description"], aliases = Commands.Info["aliases"], enabled = collection.find_one({"_id":"developer"})["commands"])
     async def info(self, ctx):
         

@@ -8,7 +8,7 @@ from Global import Emoji, logger, collection, Data, Functions
 async def errorFormat(client, exception):
     #logging in private, dev only, channel
     await client.get_channel(748894459118354532).send(f"{Emoji.cross} Check console for errors")
-    
+
     logger.error(exception) 
     for el in traceback.format_exception(type(exception), exception, exception.__traceback__):
         print(el.strip())
