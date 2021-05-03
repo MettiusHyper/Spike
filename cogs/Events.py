@@ -1,8 +1,9 @@
 import discord
+import datetime
 import traceback
 
+from asyncio import sleep
 from discord.ext import commands
-from discord.ext.commands import errors
 from Global import Emoji, logger, collection, Data, Functions
 
 async def errorFormat(client, exception):
@@ -13,9 +14,28 @@ async def errorFormat(client, exception):
     for el in traceback.format_exception(type(exception), exception, exception.__traceback__):
         print(el.strip())
 
+def updateLists(self):
+    for el in collection.find({}):
+        guild = self.client.get_guild(el["id"])
+        if guild != None:
+            users = el["users"]
+            del users[0]
+            users.append(len(guild.members))
+            collection.update_one({"_id": el["id"]}, {"$set": {"users" : users}})
+    logger.info("users lists have been update successfully")
+
 class Events(commands.Cog):
     def __init__(self, client):
         self.client = client
+
+    @commands.Cog.listener()
+    async def on_ready(self):
+        now = datetime.datetime.now()
+        if now.hour < 12:
+            await sleep((datetime.datetime(now.year, now.month, now.day, 12) - now).seconds)
+        else:
+            await sleep(((datetime.datetime(now.year, now.month, now.day, 12) + datetime.timedelta(days=1)) - now).seconds)
+        updateLists(self)
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, exception):
