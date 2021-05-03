@@ -19,9 +19,10 @@ def updateLists(self):
         guild = self.client.get_guild(el["id"])
         if guild != None:
             users = el["users"]
-            del users[0]
-            users.append(len(guild.members))
-            collection.update_one({"_id": el["id"]}, {"$set": {"users" : users}})
+            if users != False:
+                del users[0]
+                users.append(len(guild.members))
+                collection.update_one({"_id": el["id"]}, {"$set": {"users" : users}})
     logger.info("users lists have been update successfully")
 
 class Events(commands.Cog):
