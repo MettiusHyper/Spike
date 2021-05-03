@@ -1,6 +1,7 @@
 import os
 import discord
-
+os.environ["TOKEN"] = "NzM4MDg0MzQ4NjAzMDA3MDQ4.XyGwnQ.4NVnRZXuqwngMSOZKrzwXdbCC2k"
+os.environ["MONGO"] = "mongodb+srv://SullivanBot:Molly8523@sullivan-database.xhf4k.mongodb.net/Apps?retryWrites=true"
 from discord.ext import commands
 from Global import logger, Dev, Functions
 
