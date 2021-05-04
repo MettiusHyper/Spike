@@ -174,6 +174,25 @@ class Dev:
 #5: channel
 #6: role
 class Commands:
+    Kick = {
+        "name" : "Kick",
+        "description" : "Kicks a member from the server.",
+        "options" : [
+            {
+                "name" : "member",
+                "required" : True,
+                "type" : 3
+            },
+            {
+                "name" : "reason",
+                "required" : False,
+                "type" : 1
+            }
+        ],
+        "permissions" : discord.Permissions.kick_members,
+        "type" : 1,
+        "aliases" : []
+    }
     Ban = {
         "name" : "Ban",
         "description" : "Bans a member from the server.",
