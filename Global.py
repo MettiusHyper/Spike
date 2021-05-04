@@ -1,4 +1,3 @@
-import dateparser
 import logging
 import pymongo
 import discord
