@@ -39,8 +39,9 @@ class Ban(commands.Cog):
 
         #resets the database for the current guild
         data = collection.find_one({"_id" : ctx.guild.id})["members"]
-        del data[str(member.id)]
-        collection.update_one({"_id": ctx.guild.id}, {"$set": {"members" : data}})
+        if str(member.id) in data:
+            del data[str(member.id)]
+            collection.update_one({"_id": ctx.guild.id}, {"$set": {"members" : data}})
 
         #sends log message
         try:
