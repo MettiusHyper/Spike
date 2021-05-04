@@ -57,10 +57,6 @@ class ServerInfo(commands.Cog):
         # plotting the points
         plt.plot(x, data, color = blue)
 
-        file = os.path.split(os.path.dirname(os.path.abspath(__file__)))[0]
-        file = str(file) + "/font/Roboto.ttf"
-        #font = fm.FontProperties(fname=file)
-
         #setting colors       
         ax = plt.gca()
         ax.set_facecolor(black)
