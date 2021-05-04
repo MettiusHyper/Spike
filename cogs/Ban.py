@@ -56,7 +56,7 @@ class Ban(commands.Cog):
         #sends a confirmation message in ctx
         await ctx.send("{emoji} {member}(`{memberId}`) has been banned from the server.".format(emoji = Emoji.ban, member = member, memberId = member.id))
 
-    @commands.command(name = Commands.UnBan["name"], description = Commands.UnBan["description"], aliases = Commands.Ban["aliases"], enabled = collection.find_one({"_id":"developer"})["commands"])
+    @commands.command(name = Commands.UnBan["name"], description = Commands.UnBan["description"], aliases = Commands.UnBan["aliases"], enabled = collection.find_one({"_id":"developer"})["commands"])
     @commands.has_permissions(ban_members = True)
     @commands.guild_only()
     async def unban(self, ctx, member: discord.User, *, reason: str = None):
