@@ -24,7 +24,7 @@ class Kick(commands.Cog):
         try:
             await member.send(
                 embed = Functions.dmEmbed(
-                    ctx, "{emoji} | Kick from {server}".format(emoji = Emoji.kick, server = ctx.guild.name),
+                    ctx.guild, "{emoji} | Kick from {server}".format(emoji = Emoji.kick, server = ctx.guild.name),
                     "You've been kicked from the `{server}` server.\nThis means that you can still join back the server.".format(server = ctx.guild.name), reason
                 )
             )
@@ -48,7 +48,7 @@ class Kick(commands.Cog):
         try:
             await ctx.guild.get_channel(int(collection.find_one({"_id" : ctx.guild.id})["logs"]["kick"])).send(
                 embed = Functions.logEmbed(
-                    ctx, "{emoji} | Kick Case".format(emoji = Emoji.kick), ctx.author, member, reason
+                    ctx.guild, "{emoji} | Kick Case".format(emoji = Emoji.kick), ctx.author, member, reason
                 )
             )
         except:

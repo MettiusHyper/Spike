@@ -27,7 +27,7 @@ class Ban(commands.Cog):
         try:
             await member.send(
                 embed = Functions.dmEmbed(
-                    ctx, "{emoji} | Ban from {server}".format(emoji = Emoji.ban, server = ctx.guild.name),
+                    ctx.guild, "{emoji} | Ban from {server}".format(emoji = Emoji.ban, server = ctx.guild.name),
                     "You've been banned from the `{server}` server permanently (a very long time).\nIn order to hop back in the server you will have to be unbanned from it.".format(server = ctx.guild.name), reason
                 )
             )
@@ -47,7 +47,7 @@ class Ban(commands.Cog):
         try:
             await ctx.guild.get_channel(int(collection.find_one({"_id" : ctx.guild.id})["logs"]["ban"])).send(
                 embed = Functions.logEmbed(
-                    ctx, "{emoji} | Ban Case".format(emoji = Emoji.ban), ctx.author, member, reason
+                    ctx.guild, "{emoji} | Ban Case".format(emoji = Emoji.ban), ctx.author, member, reason
                 )
             )
         except:
@@ -69,7 +69,7 @@ class Ban(commands.Cog):
             try:
                 await ctx.guild.get_channel(int(collection.find_one({"_id" : ctx.guild.id})["logs"]["ban"])).send(
                     embed = Functions.logEmbed(
-                        ctx, "{emoji} | UnBan Case".format(emoji = Emoji.unban), ctx.author, member, reason
+                        ctx.guild, "{emoji} | UnBan Case".format(emoji = Emoji.unban), ctx.author, member, reason
                     )
                 )
             except:

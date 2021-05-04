@@ -55,7 +55,7 @@ class Warn(commands.Cog):
         try:
             await member.send(
                 embed = Functions.dmEmbed(
-                    ctx, "{warn} | Warn from {server}".format(warn = Emoji.warn, server = ctx.guild.name),
+                    ctx.guild, "{warn} | Warn from {server}".format(warn = Emoji.warn, server = ctx.guild.name),
                     "You've been warned from the `{server}` server, this waring will remain logged until a moderator removes it.\n**Warn id:** {warnId} (This id identifies the warn, could be useful to moderators).".format(server = ctx.guild.name, warnId = warnId), reason
                 )
             )
@@ -66,7 +66,7 @@ class Warn(commands.Cog):
         try:
             await ctx.guild.get_channel(int(collection.find_one({"_id" : ctx.guild.id})["logs"]["warn"])).send(
                 embed = Functions.logEmbed(
-                    ctx, "{warn} | Warn Case".format(warn = Emoji.warn), ctx.author, member, reason, warnId
+                    ctx.guild, "{warn} | Warn Case".format(warn = Emoji.warn), ctx.author, member, reason, warnId
                 )
             )
         except:
@@ -116,7 +116,7 @@ class Warn(commands.Cog):
         try:
             await member.send(
                 embed = Functions.dmEmbed(
-                    ctx, "{warn} | UnWarn from {server}".format(warn = Emoji.warn, server = ctx.guild.name),
+                    ctx.guild, "{warn} | UnWarn from {server}".format(warn = Emoji.warn, server = ctx.guild.name),
                     "One of your previus warns were removed from the `{server}` server.\n**Previus Warn id:** {Id}\n**Previus Warn Reason:** {reason}.".format(server = ctx.guild.name, Id = el["id"], reason = el["reason"]), False
                 )
             )
@@ -127,14 +127,14 @@ class Warn(commands.Cog):
         try:
             await ctx.guild.get_channel(int(collection.find_one({"_id" : ctx.guild.id})["logs"]["warn"])).send(
                 embed = Functions.logEmbed(
-                    ctx, "{warn} | UnWarn Case".format(warn = Emoji.warn), ctx.author, member, False, el["id"]
+                    ctx.guild, "{warn} | UnWarn Case".format(warn = Emoji.warn), ctx.author, member, False, el["id"]
                 )
             )
         except:
             pass
 
         #sends a confirmation message in ctx
-        await ctx.send("{warn} the warn with id {Id} ha been removed from {member}(`{memberId}`).".format(warn = Emoji.warn, member = member, memberId = member.id, Id = el["id"]))
+        await ctx.send("{warn} the warn with id `{Id}` has been removed from {member}(`{memberId}`).".format(warn = Emoji.warn, member = member, memberId = member.id, Id = el["id"]))
 
 def setup(client):
     client.add_cog(Warn(client))
