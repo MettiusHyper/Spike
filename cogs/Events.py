@@ -16,13 +16,13 @@ async def errorFormat(client, exception):
 
 def updateLists(self):
     for el in collection.find({}):
-        guild = self.client.get_guild(el["id"])
+        guild = self.client.get_guild(el["_id"])
         if guild != None:
             users = el["users"]
             if users != False:
                 del users[0]
                 users.append(len(guild.members))
-                collection.update_one({"_id": el["id"]}, {"$set": {"users" : users}})
+                collection.update_one({"_id": el["_id"]}, {"$set": {"users" : users}})
     logger.info("users lists have been update successfully")
 
 class Events(commands.Cog):
