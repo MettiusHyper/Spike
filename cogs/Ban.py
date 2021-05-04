@@ -27,7 +27,7 @@ class Ban(commands.Cog):
         try:
             await member.send(
                 embed = Functions.dmEmbed(
-                    ctx, "{ban} | Ban from {server}".format(ban = Emoji.ban, server = ctx.guild.name),
+                    ctx, "{emoji} | Ban from {server}".format(emoji = Emoji.ban, server = ctx.guild.name),
                     "You've been banned from the `{server}` server permanently (a very long time).\nIn order to hop back in the server you will have to be unbanned from it.".format(server = ctx.guild.name), reason
                 )
             )
@@ -47,14 +47,14 @@ class Ban(commands.Cog):
         try:
             await ctx.guild.get_channel(int(collection.find_one({"_id" : ctx.guild.id})["logs"]["ban"])).send(
                 embed = Functions.logEmbed(
-                    ctx, "{ban} | Ban Case".format(ban = Emoji.ban), ctx.author, member, reason
+                    ctx, "{emoji} | Ban Case".format(emoji = Emoji.ban), ctx.author, member, reason
                 )
             )
         except:
             pass
 
         #sends a confirmation message in ctx
-        await ctx.send("{ban} {member}(`{memberId}`) has been banned from the server.".format(ban = Emoji.ban, member = member, memberId = member.id))
+        await ctx.send("{emoji} {member}(`{memberId}`) has been banned from the server.".format(emoji = Emoji.ban, member = member, memberId = member.id))
 
     @commands.command(name = Commands.UnBan["name"], description = Commands.UnBan["description"], aliases = Commands.Ban["aliases"], enabled = collection.find_one({"_id":"developer"})["commands"])
     @commands.has_permissions(ban_members = True)
@@ -69,14 +69,14 @@ class Ban(commands.Cog):
             try:
                 await ctx.guild.get_channel(int(collection.find_one({"_id" : ctx.guild.id})["logs"]["ban"])).send(
                     embed = Functions.logEmbed(
-                        ctx, "{unban} | UnBan Case".format(unban = Emoji.ban), ctx.author, member, reason
+                        ctx, "{emoji} | UnBan Case".format(emoji = Emoji.unban), ctx.author, member, reason
                     )
                 )
             except:
                 pass
 
             # ctx message
-            return await ctx.send("{unban} {member}(`{memberId}`) has been unbanned from the server.".format(unban = Emoji.unban, member = member, memberId = member.id))
+            return await ctx.send("{emoji} {member}(`{memberId}`) has been unbanned from the server.".format(emoji = Emoji.unban, member = member, memberId = member.id))
 
         await ctx.send("{cross} This user is not banned in this server.".format(cross = Emoji.cross))
 
