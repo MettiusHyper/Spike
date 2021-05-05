@@ -6,6 +6,22 @@ import datetime
 from discord.ext import commands
 from Global import Emoji, Functions, collection
 
+async def reloadCogs(client, ctx):
+    cogs = client.extensions
+    remove = []
+    for cog in cogs:
+        if cog != "cogs.Dev":
+            remove.append(str(cog))
+    for el in remove:
+        client.unload_extension(el)
+    #loads every cog in the cogs folder
+    for cog in os.listdir("./cogs"):
+        if cog != "Dev.py":
+            try:
+                client.load_extension(f"cogs.{cog[:-3]}")
+            except Exception as e:
+                await ctx.send(str(e))
+
 def insert_returns(body):
     if isinstance(body[-1], ast.Expr):
         body[-1] = ast.Return(body[-1].value)
@@ -96,6 +112,24 @@ class Dev(commands.Cog):
                 collection.update_one({"_id" : "developer"}, {"$set" : {"name" : game}})
             await Functions.updateStatus(self.client)
             await ctx.send(f"{Emoji.tick} Status modified to {status}, activity setted to {activity} | {str(game)}")
+    
+    @commands.command()
+    @commands.guild_only()
+    async def reload(self, ctx):
+        if Functions.isDev(ctx.author):
+            await reloadCogs(self.client, ctx)
+            await ctx.message.add_reaction(Emoji.tick)
+
+    @commands.command()
+    @commands.guild_only()
+    async def commands(self, ctx):
+        if Functions.isDev(ctx.author):
+            if collection.find_one({"_id" : "developer"})["commands"]:
+                collection.update_one({"_id" : "developer"}, {"$set" : {"commands" : False}})
+            else:
+                collection.update_one({"_id" : "developer"}, {"$set" : {"commands" : True}})
+            await reloadCogs(self.client, ctx)
+            await ctx.message.add_reaction(Emoji.tick)
 
 def setup(client):
     client.add_cog(Dev(client))
