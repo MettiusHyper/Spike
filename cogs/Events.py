@@ -20,7 +20,8 @@ def updateLists(self):
         if guild != None:
             users = el["users"]
             if users != False:
-                del users[0]
+                if len(users) == 9:
+                    del users[0]
                 users.append(len(guild.members))
                 collection.update_one({"_id": el["_id"]}, {"$set": {"users" : users}})
     logger.info("users lists have been update successfully")

@@ -247,9 +247,25 @@ class Dev:
 #5: channel
 #6: role
 class Commands:
+    Help = {
+        "name" : "Help",
+        "short" : "This command",
+        "description" : "Help command, returns a list of commands or information about the specified command.",
+        "options" : [
+            {
+                "name" : "command",
+                "required" : False,
+                "type" : 1
+            }
+        ],
+        "permissions" : None,
+        "type" : 2,
+        "aliases" : []
+    }
     Mute = {
         "name" : "Mute",
-        "description" : "Mutes a member for a determined amount of time.",
+        "short" : "Mutes a member for a determined amount of time.",
+        "description" : "Mutes a member of the server for a determined amount of time, you can also specify a reason for the moderation action.",
         "options" : [
             {
                 "name" : "member",
@@ -267,13 +283,14 @@ class Commands:
                 "type" : 1
             }
         ],
-        "permissions" : discord.Permissions.mute_members,
+        "permissions" : "Mute Members",
         "type" : 1,
         "aliases" : []
     }
     UnMute = {
         "name" : "UnMute",
-        "description" : "Mutes a member from the server.",
+        "short" : "UnMutes a member of the server",
+        "description" : "UnMutes a member that has previusly been muted in the server, you can also specify a reason for the moderation action.",
         "options" : [
             {
                 "name" : "member",
@@ -286,13 +303,14 @@ class Commands:
                 "type" : 1
             }
         ],
-        "permissions" : discord.Permissions.mute_members,
+        "permissions" : "Mute Members",
         "type" : 1,
         "aliases" : []
     }
     Kick = {
         "name" : "Kick",
-        "description" : "Kicks a member from the server.",
+        "short" : "Kicks a member from the server.",
+        "description" : "Kicks a member from the server, you can also specify a reason for the moderation action.",
         "options" : [
             {
                 "name" : "member",
@@ -305,13 +323,14 @@ class Commands:
                 "type" : 1
             }
         ],
-        "permissions" : discord.Permissions.kick_members,
+        "permissions" : "Kick Members",
         "type" : 1,
         "aliases" : []
     }
     Ban = {
         "name" : "Ban",
-        "description" : "Bans a member from the server.",
+        "short" : "Bans a member from the server.",
+        "description" : "Bans a member from the server, you can also specify a reason for the moderation action. If setted, a link for appealing the ban gets sent in the ",
         "options" : [
             {
                 "name" : "user",
@@ -324,13 +343,14 @@ class Commands:
                 "type" : 1
             }
         ],
-        "permissions" : discord.Permissions.ban_members,
+        "permissions" : "Ban Members",
         "type" : 1,
         "aliases" : []
     }
     UnBan = {
         "name" : "UnBan",
-        "description" : "Unbans a user from the server.",
+        "short" : "UnBans a user from the server.",
+        "description" : "UnBans a user from the server, you can also specify a reason for the moderation action.",
         "options" : [
             {
                 "name" : "user",
@@ -343,13 +363,14 @@ class Commands:
                 "type" : 1
             }
         ],
-        "permissions" : discord.Permissions.ban_members,
+        "permissions" : "Ban Members",
         "type" : 1,
         "aliases" : []
     }
     Warn = {
         "name" : "Warn",
-        "description" : "Adds a warn to a member of the server.",
+        "short" : "Adds a warn to a member of the server.",
+        "description" : "Adds a warn to a member of the server, also gives moderators an uuid to remove the warn if necessary. You can also specify a reason for the moderation action.",
         "options" : [
             {
                 "name" : "member",
@@ -362,13 +383,14 @@ class Commands:
                 "type" : 1
             }
         ],
-        "permissions" : discord.Permissions.manage_messages,
+        "permissions" : "Manage Messages",
         "type" : 1,
         "aliases" : []
     }
     UnWarn = {
         "name" : "UnWarn",
-        "description" : "Removes a warn from a member of the server.",
+        "short" : "Removes a warn from a member of the server.",
+        "description" : "Removes a warn from a member of the server. You can specify the warn uuid to remove the specific warn and also a reason for the moderation action.",
         "options" : [
             {
                 "name" : "member",
@@ -381,12 +403,13 @@ class Commands:
                 "type" : 1
             }
         ],
-        "permissions" : discord.Permissions.manage_messages,
+        "permissions" : "Manage Messages",
         "type" : 1,
         "aliases" : []
     }
     Userinfo = {
         "name" : "Userinfo",
+        "short" : "Gives informations about the specified user.",
         "description" : "Gives informations about the specified user, if the one executing the command has the manage_messages permission the bot will also return some moderation info.",
         "options" : [
             {
@@ -401,6 +424,7 @@ class Commands:
     }
     Ping = {
         "name" : "Ping",
+        "short" : "Returns the current ping of the bot.",
         "description" : "Returns the current ping of the bot.",
         "options" : [],
         "permissions" : None,
@@ -409,6 +433,7 @@ class Commands:
     }
     Info = {
         "name" : "Info",
+        "short" : "Returns some information about the bot.",
         "description" : "Returns some information about the bot.",
         "options" : [],
         "permissions" : None,
@@ -417,7 +442,8 @@ class Commands:
     }
     Link = {
         "name" : "Link",
-        "description" : "Returns every link for the bot.",
+        "short" : "Returns every link related to the bot.",
+        "description" : "rns every link related to the bot.",
         "options" : [],
         "permissions" : None,
         "type" : 2,
@@ -425,7 +451,8 @@ class Commands:
     }
     Prefix = {
         "name" : "Prefix",
-        "description" : "Allows to change the custom server's prefix.",
+        "short" : "Allows the change the custom server's prefix.",
+        "description" : "Allows the change the custom server's prefix.",
         "options" : [
             {
                 "name" : "new prefix",
@@ -433,13 +460,14 @@ class Commands:
                 "type" : 1
             }
         ],
-        "permissions" : discord.Permissions.administrator,
+        "permissions" : "Administrator",
         "type" : 2,
         "aliases" : []
     }
     ServerInfo = {
         "name" : "ServerInfo",
-        "description" : "Returns lots of information about the guild, and also a chart with the amount of users that were in the server in the last 7 days",
+        "short" : "Returns lots of information about the guild.",
+        "description" : "Returns lots of information about the guild, and also a chart with the amount of users that were in the server in the last 9 days",
         "options" : [
             {
                 "name" : "new prefix",
@@ -447,7 +475,7 @@ class Commands:
                 "type" : 1
             }
         ],
-        "permissions" : discord.Permissions.administrator,
+        "permissions" : None,
         "type" : 2,
         "aliases" : []
     }

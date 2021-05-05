@@ -10,6 +10,7 @@ intents.members = True
 
 #creating client with discord.ext.commands
 client = commands.Bot(command_prefix = Dev.prefix, intents = intents, case_insensitive = True)
+client.remove_command("help")
 
 #loads every cog in the cogs folder
 for cog in os.listdir("./cogs"):
