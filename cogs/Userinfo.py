@@ -9,12 +9,11 @@ class Userinfo(commands.Cog):
         self.client = client
 
     @commands.command(name = Commands.Userinfo["name"], description = Commands.Userinfo["description"], aliases = Commands.Userinfo["aliases"], enabled = collection.find_one({"_id":"developer"})["commands"])
-    @commands.guild_only()
     async def userinfo(self, ctx, member: discord.User = None):
         if member == None:
             member = ctx.author
         
-        if ctx.guild.get_member(member.id) != None:
+        if ctx.guild != None and ctx.guild.get_member(member.id) != None:
             member = ctx.guild.get_member(member.id)
             
         embed = discord.Embed(title = "Userinfo", color = Functions.color(ctx))
@@ -27,7 +26,7 @@ class Userinfo(commands.Cog):
         else:
             embed.add_field(name = "Joined Server:", value = "This user is not in the server.")
             embed.add_field(name = "Highest Role", value = "No role", inline = False)
-        if ctx.message.author.guild_permissions.manage_messages == True:
+        if ctx.guild != None and ctx.message.author.guild_permissions.manage_messages == True:
             if await Functions.isUserBanned(ctx, member):
                 embed.add_field(name = "Infractions", value = Functions.banReason(ctx, member), inline = False)
             else:
@@ -51,7 +50,7 @@ class Userinfo(commands.Cog):
         except:
             vc = "Not connected"
         embed.add_field(name = "Voice Channel", value = vc)
-        if ctx.message.author.guild_permissions.manage_messages == True:
+        if ctx.guild != None and ctx.message.author.guild_permissions.manage_messages == True:
             data = collection.find_one({"_id" : "muted"})
             muteTime = None
             for el in data["muted"]:
