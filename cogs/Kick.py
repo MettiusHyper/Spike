@@ -42,7 +42,10 @@ class Kick(commands.Cog):
                 data[str(member.id)].update({"kicks" : (dbMember["kicks"] + 1)})
             else:
                 data[str(member.id)].update({"kicks" : 1})
-            collection.update_one({"_id": ctx.guild.id}, {"$set": {"members" : data}})
+        else:
+            data.update({str(member.id) : {"kicks" : 1}})
+        
+        collection.update_one({"_id": ctx.guild.id}, {"$set": {"members" : data}})
 
         #sends log message
         try:

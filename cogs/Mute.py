@@ -52,7 +52,9 @@ class Mute(commands.Cog):
                 data[str(member.id)].update({"mutes" : (dbMember["mutes"] + 1)})
             else:
                 data[str(member.id)].update({"mutes" : 1})
-            collection.update_one({"_id": ctx.guild.id}, {"$set": {"members" : data}})
+        else:
+            data.update({str(member.id) : {"mutes" : 1}})
+        collection.update_one({"_id": ctx.guild.id}, {"$set": {"members" : data}})
 
         #adds to muted
         data = collection.find_one({"_id" : "muted"})["muted"]

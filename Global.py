@@ -247,6 +247,15 @@ class Dev:
 #5: channel
 #6: role
 class Commands:
+    Setup = {
+        "name" : "Setup",
+        "short" : "Change server's settings",
+        "description" : "Allows you to change all of the server's settings.",
+        "options" : [],
+        "permissions" : "Administrator",
+        "type" : 2,
+        "aliases" : ["settings", "impostazioni"]
+    }
     Help = {
         "name" : "Help",
         "short" : "This command",
@@ -264,7 +273,7 @@ class Commands:
     }
     Mute = {
         "name" : "Mute",
-        "short" : "Mutes a member for a determined amount of time.",
+        "short" : "Mutes a member for a determined amount of time",
         "description" : "Mutes a member of the server for a determined amount of time, you can also specify a reason for the moderation action.",
         "options" : [
             {
@@ -309,7 +318,7 @@ class Commands:
     }
     Kick = {
         "name" : "Kick",
-        "short" : "Kicks a member from the server.",
+        "short" : "Kicks a member from the server",
         "description" : "Kicks a member from the server, you can also specify a reason for the moderation action.",
         "options" : [
             {
@@ -329,7 +338,7 @@ class Commands:
     }
     Ban = {
         "name" : "Ban",
-        "short" : "Bans a member from the server.",
+        "short" : "Bans a member from the server",
         "description" : "Bans a member from the server, you can also specify a reason for the moderation action. If setted, a link for appealing the ban gets sent in the ",
         "options" : [
             {
@@ -369,7 +378,7 @@ class Commands:
     }
     Warn = {
         "name" : "Warn",
-        "short" : "Adds a warn to a member of the server.",
+        "short" : "Adds a warn to a member of the server",
         "description" : "Adds a warn to a member of the server, also gives moderators an uuid to remove the warn if necessary. You can also specify a reason for the moderation action.",
         "options" : [
             {
@@ -389,7 +398,7 @@ class Commands:
     }
     UnWarn = {
         "name" : "UnWarn",
-        "short" : "Removes a warn from a member of the server.",
+        "short" : "Removes a warn from a member of the server",
         "description" : "Removes a warn from a member of the server. You can specify the warn uuid to remove the specific warn and also a reason for the moderation action.",
         "options" : [
             {
@@ -409,7 +418,7 @@ class Commands:
     }
     Userinfo = {
         "name" : "Userinfo",
-        "short" : "Gives informations about the specified user.",
+        "short" : "Gives informations about the specified user",
         "description" : "Gives informations about the specified user, if the one executing the command has the manage_messages permission the bot will also return some moderation info.",
         "options" : [
             {
@@ -424,7 +433,7 @@ class Commands:
     }
     Ping = {
         "name" : "Ping",
-        "short" : "Returns the current ping of the bot.",
+        "short" : "Returns the current ping of the bot",
         "description" : "Returns the current ping of the bot.",
         "options" : [],
         "permissions" : None,
@@ -433,7 +442,7 @@ class Commands:
     }
     Info = {
         "name" : "Info",
-        "short" : "Returns some information about the bot.",
+        "short" : "Returns some information about the bot",
         "description" : "Returns some information about the bot.",
         "options" : [],
         "permissions" : None,
@@ -451,7 +460,7 @@ class Commands:
     }
     Prefix = {
         "name" : "Prefix",
-        "short" : "Allows the change the custom server's prefix.",
+        "short" : "Allows the change the custom server's prefix",
         "description" : "Allows the change the custom server's prefix.",
         "options" : [
             {
@@ -466,7 +475,7 @@ class Commands:
     }
     ServerInfo = {
         "name" : "ServerInfo",
-        "short" : "Returns lots of information about the guild.",
+        "short" : "Returns lots of information about the guild",
         "description" : "Returns lots of information about the guild, and also a chart with the amount of users that were in the server in the last 9 days",
         "options" : [
             {
