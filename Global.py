@@ -14,7 +14,7 @@ logger.addHandler(handler)
 collection = pymongo.MongoClient(os.environ['MONGO'])["Bots"]["SpikeDatabase"]
 
 class Data:
-    version = "0.1.0"
+    version = "1.0.0"
     prefix = "s!"
     default_color = 0x177e45
     empty_color = 0x2f3136

@@ -5,6 +5,20 @@ import asyncio
 from discord.ext import commands
 from Global import Dev, collection, Commands, Emoji, Functions
 
+def getChannel(ctx, name):
+    logs = collection.find_one({"_id" : ctx.guild.id})["logs"]
+    if name in logs and ctx.guild.get_channel(logs[name]) != None:
+        return ctx.guild.get_channel(logs[name]).mention
+    else:
+        return "`Not setted`"
+
+logsNames = {
+    "🔨" : "Ban",
+    "👢" : "Kick",
+    "🔇" : "Mute",
+    "☢️" : "Warn"
+}
+
 class Setup(commands.Cog):
     def __init__(self, client):
         self.client = client
@@ -26,7 +40,77 @@ class Setup(commands.Cog):
     
     @setup.command(name = "logs")
     async def logs(self, ctx):
-        await ctx.send("This command will soon be implemented")
+        logs = collection.find_one({"_id" : ctx.guild.id})["logs"]
+        msg = await ctx.send(
+            embed = discord.Embed(
+                color = Functions.color(ctx),
+                title = "Logs {emoji}".format(emoji = Emoji.channels),
+                description = "React with the respective emoji to edit the channel."
+            )
+            .add_field(name = "Ban Channel {}".format(Emoji.ban), value = getChannel(ctx, "ban"))
+            .add_field(name = "Kick Channel {}".format(Emoji.kick), value = getChannel(ctx, "kick"))
+            .add_field(name = "\u200C", value = "\u200C")
+            .add_field(name = "Mute Channel {}".format(Emoji.mute), value = getChannel(ctx, "mute"))
+            .add_field(name = "Warn Channel {}".format(Emoji.warn), value = getChannel(ctx, "warn"))
+            .add_field(name = "\u200C", value = "\u200C")
+        )
+        for el in logsNames:
+            await msg.add_reaction(el)
+        try:
+            def check(reaction, user):
+                return user == ctx.author and str(reaction.emoji) in logsNames
+            reaction, user = await self.client.wait_for('reaction_add', timeout = 60.0, check = check)
+            await msg.edit(
+                embed = discord.Embed(
+                    color = Functions.color(ctx),
+                    title = "{name} Channel {reaction}".format(name = logsNames[str(reaction)], reaction = reaction),
+                    description = "React with:\n{green} to specify a new channel\n{red} to remove the current channel".format(green = Emoji.greenSq, red = Emoji.redSq)
+                )
+                .add_field(name = "Current Channel", value = getChannel(ctx, logsNames[str(reaction)].lower()))
+            )
+            message = await ctx.channel.fetch_message(msg.id)
+            await message.clear_reactions()
+        except asyncio.TimeoutError:
+            message = await ctx.channel.fetch_message(msg.id)
+            return await message.clear_reactions()
+        await msg.add_reaction("🟩")
+        await msg.add_reaction("🟥")
+
+        try:
+            def check(reaction, user):
+                return user == ctx.author and str(reaction.emoji) in ("🟥", "🟩")
+            react, user = await self.client.wait_for('reaction_add', timeout = 60.0, check = check)
+            if str(react) == "🟩":
+                await ctx.send("Send a message with only the mention of the **channel**.")
+                def check(m):
+                    return m.author == ctx.author
+                command = await self.client.wait_for('message', timeout = 60.0, check=check)
+                command = command.content
+                try:
+                    if command.startswith("<#") and command.endswith(">"):
+                        command = int(command.strip()[-19:-1])
+                    else:
+                        command = int(command)
+                except:
+                    pass
+                if (type(command) == int and len(str(command)) == 18) and ctx.guild.get_channel(command) != None:
+                    logs.update({logsNames[str(reaction)].lower() : command})
+                    collection.update_one({"_id": ctx.guild.id}, {"$set": {"logs" : logs}})
+                    await ctx.send("{} Channel has been setted".format(Emoji.tick))
+                else:
+                    await ctx.send("{} Please specify a valid channel".format(Emoji.cross))
+            elif str(react) == "🟥":
+                if getChannel(ctx, logsNames[str(reaction)].lower()).startswith("`"):
+                    await ctx.send("{} No channel has been previusly setted.".format(Emoji.cross))
+                else:
+                    del logs[logsNames[str(reaction)].lower()]
+                    print(logs)
+                    collection.update_one({"_id": ctx.guild.id}, {"$set": {"settings" : logs}})
+                    await ctx.send("{} Channel has been removed from the bot's settings".format(Emoji.tick))
+            raise asyncio.TimeoutError
+        except asyncio.TimeoutError:
+            message = await ctx.channel.fetch_message(msg.id)
+            await message.clear_reactions()
 
     @setup.command(name = "banappeal")
     async def banappeal(self, ctx):
