@@ -74,6 +74,9 @@ class Basic(commands.Cog):
         if prefix == Dev.prefix(self.client, ctx)[1]:
             embed.description = "\nThis is already the server's prefix (`{p}`).".format(p = Dev.prefix(self.client, ctx)[1])
             return await ctx.send(embed = embed)
+        if len(prefix) > 3:
+            embed.description = "\nPlease specify a prefix which is shorter than three charachters.".format(p = Dev.prefix(self.client, ctx)[1])
+            return await ctx.send(embed = embed)
         collection.update_one({"_id" : ctx.guild.id}, {"$set" : {"prefix" : prefix}})
         embed.description = "\nPrefix setted correcty, the new prefix is `{p}`.".format(p = Dev.prefix(self.client, ctx)[1])
         await ctx.send(embed = embed)

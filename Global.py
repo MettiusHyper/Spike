@@ -360,7 +360,7 @@ class Commands:
     }
     UnBan = {
         "name" : "UnBan",
-        "short" : "UnBans a user from the server.",
+        "short" : "UnBans a user from the server",
         "description" : "UnBans a user from the server, you can also specify a reason for the moderation action.",
         "options" : [
             {
@@ -453,7 +453,7 @@ class Commands:
     }
     Link = {
         "name" : "Link",
-        "short" : "Returns every link related to the bot.",
+        "short" : "Returns every link related to the bot",
         "description" : "rns every link related to the bot.",
         "options" : [],
         "permissions" : None,
