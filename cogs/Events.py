@@ -107,12 +107,15 @@ class Events(commands.Cog):
                     return await ctx.send("{cross} Please specify a duration (valid forms are: `1h20m`, `5days 20min`, `in 5 hours`)".format(cross = Emoji.cross))
 
         elif isinstance(exception, commands.MissingPermissions):
+            print(ctx.command)
             if ctx.command == self.client.get_command("ban") or ctx.command == self.client.get_command("unban"):
                 return await ctx.send("{cross} You don't have the required permissions (Ban Members)".format(cross = Emoji.cross))
             elif ctx.command == self.client.get_command("kick"):
                 return await ctx.send("{cross} You don't have the required permissions (Kick Members)".format(cross = Emoji.cross))
             elif ctx.command == self.client.get_command("mute") or ctx.command == self.client.get_command("unmute"):
                 return await ctx.send("{cross} You don't have the required permissions (Mute Members)".format(cross = Emoji.cross))
+            elif ctx.command in (self.client.get_command("prefix"), self.client.get_command("setup"), self.client.get_command("setup muterole"), self.client.get_command("setup banappeal"), self.client.get_command("setup logs")):
+                return await ctx.send("{cross} You don't have the required permissions (Administrator)".format(cross = Emoji.cross))
 
         elif isinstance(exception, commands.DisabledCommand):
             return await ctx.send("{cross} This command is currently disabled, try again later".format(cross = Emoji.cross))

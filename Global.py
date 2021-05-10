@@ -52,6 +52,8 @@ class Emoji:
     help = "<:info:838005178287915059>"
     setup = ":gear:"
     pencil = ":pencil:"
+    redSq = ":red_square:"
+    greenSq = ":green_square:"
 
 class Functions:
     def dmEmbed(guild, title, description, reason):
@@ -167,7 +169,7 @@ class Functions:
                 await channel.set_permissions(role, send_messages = False, add_reactions = False, connect = False)
             except:
                 pass
-        positions = {role : ctx.guild.me.top_role.position}
+        positions = {role : ctx.guild.me.top_role.position - 1}
         await ctx.guild.edit_role_positions(positions)
         settings = collection.find_one({"_id" : ctx.guild.id})["settings"]
         settings.update({"muterole" : role.id})
@@ -254,7 +256,7 @@ class Commands:
         "options" : [],
         "permissions" : "Administrator",
         "type" : 2,
-        "aliases" : ["settings", "impostazioni"]
+        "aliases" : ["settings", "impostazioni", "config", "configuration"]
     }
     Help = {
         "name" : "Help",

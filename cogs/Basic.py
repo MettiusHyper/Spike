@@ -65,6 +65,7 @@ class Basic(commands.Cog):
         )
 
     @commands.command(name = Commands.Prefix["name"], description = Commands.Prefix["description"], aliases = Commands.Prefix["aliases"], enabled = collection.find_one({"_id":"developer"})["commands"])
+    @commands.has_permissions(administrator = True)
     @commands.guild_only()
     async def prefix(self, ctx, prefix : str = None):
         if prefix == None or ctx.author.guild_permissions.administrator == False:
