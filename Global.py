@@ -14,7 +14,7 @@ logger.addHandler(handler)
 collection = pymongo.MongoClient(os.environ['MONGO'])["Bots"]["SpikeDatabase"]
 
 class Data:
-    version = "1.0.0"
+    version = "1.0.1"
     prefix = "s!"
     default_color = 0x177e45
     empty_color = 0x2f3136
@@ -220,12 +220,12 @@ class Functions:
         return datetime.timedelta(days = days, hours = hours, minutes= minutes, seconds = seconds)
 
     def formatDelta(timeDelta):
-        if timeDelta > datetime.timedelta(days = 1):
-            returnObj = "{d} day {h} hours".format(d = round(timeDelta.days), h = round(timeDelta.seconds/3600))
+        if timeDelta >= datetime.timedelta(days = 1):
+            returnObj = "{d} day {h} hours".format(d = int(timeDelta.days), h = int(timeDelta.seconds/3600))
         elif timeDelta > datetime.timedelta(hours= 1.5):
-            returnObj = "{h} hours {m} minutes".format(h = round(timeDelta.seconds/3600), m = round(timeDelta.seconds % 3600 / 60.0))
+            returnObj = "{h} hours {m} minutes".format(h = int(timeDelta.seconds/3600), m = int(timeDelta.seconds % 3600 / 60.0))
         else:
-            returnObj = "{m} minutes".format(m = round(timeDelta.seconds / 60))
+            returnObj = "{m} minutes".format(m = int(timeDelta.seconds / 60))
         return returnObj
 
 class Dev:

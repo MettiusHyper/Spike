@@ -119,6 +119,7 @@ class Events(commands.Cog):
 
         elif isinstance(exception, commands.DisabledCommand):
             return await ctx.send("{cross} This command is currently disabled, try again later".format(cross = Emoji.cross))
+        
         await errorFormat(self.client, exception)
 
     @commands.Cog.listener()
@@ -142,13 +143,14 @@ class Events(commands.Cog):
 
         def check(event):
             return event.target.id == self.client.user.id
-        bot_entry = await guild.audit_logs(action=discord.AuditLogAction.bot_add).find(check)
-        embed = discord.Embed(colour = Data.default_color, description = f"You have just added me into {guild} server, in this message I will give you some informations to get started.")
-        embed.set_author(name = "Thanks for inviting me!", icon_url = self.client.user.avatar_url)
-        embed.add_field(name = "Commands :gear:", value = f"Those are just the commands to setup {self.client.user.mention} use {Data.prefix}help for a detailed list and description\n**{Data.prefix}setup** | `Will enable you to setup logs channels and other features.`\n**{Data.prefix}prefix** | `Use this command to change the prefix of {self.client.user.name}`", inline = False)
-        embed.add_field(name = f"Links {Emoji.link}", value = f"""If you want to invite me in another server [this is the link to do so]({Data.invite_link}).\n\u200C\nIf you want to report a bug in the bot, a writing error or if you just want to talk to the developers you can just send a message here, in the bot's dms.""", inline = False)
-        embed.set_footer(text = f"The {self.client.user.name} Developer team")
-        await bot_entry.user.send(embed = embed)
+        if guild.me.guild_permissions.administrator:
+            bot_entry = await guild.audit_logs(action=discord.AuditLogAction.bot_add).find(check)
+            embed = discord.Embed(colour = Data.default_color, description = f"You have just added me into {guild} server, in this message I will give you some informations to get started.")
+            embed.set_author(name = "Thanks for inviting me!", icon_url = self.client.user.avatar_url)
+            embed.add_field(name = "Commands :gear:", value = f"Those are just the commands to setup {self.client.user.mention} use {Data.prefix}help for a detailed list and description\n**{Data.prefix}setup** | `Will enable you to setup logs channels and other features.`\n**{Data.prefix}prefix** | `Use this command to change the prefix of {self.client.user.name}`", inline = False)
+            embed.add_field(name = f"Links {Emoji.link}", value = f"""If you want to invite me in another server [this is the link to do so]({Data.invite_link}).\n\u200C\nIf you want to report a bug in the bot, a writing error or if you just want to talk to the developers you can just send a message here, in the bot's dms.""", inline = False)
+            embed.set_footer(text = f"The {self.client.user.name} Developer team")
+            await bot_entry.user.send(embed = embed)
     
     @commands.Cog.listener()
     async def on_guild_remove(self, guild):

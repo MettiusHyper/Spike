@@ -27,6 +27,13 @@ class Mute(commands.Cog):
         if role > ctx.guild.me.top_role:
             return await ctx.send("{cross} The setted muterole is higher than the bot's highest role".format(cross = Emoji.cross))
 
+        mutes = collection.find_one({"_id" : "muted"})["muted"]
+
+        for el in mutes:
+            if el["user"] == member.id and el["guild"] == ctx.guild.id:
+                await member.add_roles(role)
+                return await ctx.send("{cross} The member is already muted".format(cross = Emoji.cross))
+
         if role in member.roles:
             return await ctx.send("{cross} The member already has the muterole".format(cross = Emoji.cross))
 

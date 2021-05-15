@@ -12,6 +12,9 @@ class Kick(commands.Cog):
     @commands.guild_only()
     async def kick(self, ctx, member: discord.Member, *, reason: str = None): 
 
+        if ctx.me.guild_permissions.kick_members == False:
+            return await ctx.send("{cross} {bot} can't kick members from the server, check its permissions}".format(cross = Emoji.cross, bot = self.client.user.name))
+
         #check if the member is owner
         if ctx.guild.owner == member:
             return await ctx.send("{cross} You can't kick the server owner".format(cross = Emoji.cross))

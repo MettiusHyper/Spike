@@ -10,7 +10,10 @@ class Ban(commands.Cog):
     @commands.command(name = Commands.Ban["name"], description = Commands.Ban["description"], aliases = Commands.Ban["aliases"], enabled = collection.find_one({"_id":"developer"})["commands"])
     @commands.has_permissions(ban_members = True)
     @commands.guild_only()
-    async def ban(self, ctx, member: discord.User, *, reason: str = None): 
+    async def ban(self, ctx, member: discord.User, *, reason: str = None):
+
+        if ctx.me.guild_permissions.ban_members == False:
+            return await ctx.send("{cross} {bot} can't ban members from the server, check its permissions}".format(cross = Emoji.cross, bot = self.client.user.name))
 
         if ctx.guild.get_member(member.id) != None:
             member = ctx.guild.get_member(member.id)
