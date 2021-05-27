@@ -11,7 +11,7 @@ handler = logging.StreamHandler(stream=sys.stdout)
 handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s:%(name)s: %(message)s', datefmt="%d/%m/%Y %H:%M:%S"))
 logger.addHandler(handler)
 
-collection = pymongo.MongoClient(os.environ['MONGO'])["Bots"]["SpikeDatabase"]
+collection = pymongo.MongoClient(os.environ['MONGO'])["Spike"]["SpikeDatabase"]
 
 class Data:
     version = "1.0.1"
