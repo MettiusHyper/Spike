@@ -13,7 +13,7 @@ class Ban(commands.Cog):
     async def ban(self, ctx, member: discord.User, *, reason: str = None):
 
         if ctx.me.guild_permissions.ban_members == False:
-            return await ctx.send("{cross} {bot} can't ban members from the server, check its permissions}".format(cross = Emoji.cross, bot = self.client.user.name))
+            return await ctx.send("{cross} {bot} can't ban members from the server, check its permissions".format(cross = Emoji.cross, bot = self.client.user.name))
 
         if ctx.guild.get_member(member.id) != None:
             member = ctx.guild.get_member(member.id)

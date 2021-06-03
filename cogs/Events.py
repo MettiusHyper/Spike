@@ -96,7 +96,7 @@ class Events(commands.Cog):
             return await ctx.send("{cross} I couldn't find this user".format(cross = Emoji.cross))
 
         elif isinstance(exception, commands.MissingRequiredArgument):
-            if ctx.command == self.client.get_command("ban") or ctx.command == self.client.get_command("unban") or ctx.command == self.client.get_command("kick"):
+            if ctx.command in (self.client.get_command("ban"), self.client.get_command("unban"), self.client.get_command("kick"), self.client.get_command("mute"), self.client.get_command("unmmute"), self.client.get_command("warn"), self.client.get_command("unwarn")):
                 return await ctx.send("{cross} Please specify a valid member".format(cross = Emoji.cross))
             elif ctx.command == self.client.get_command("status"):
                 return await ctx.send("{cross} Specify the arguments for the status command `%status [online, dnd, idle] [playing, listening, watching] [name]`".format(cross = Emoji.cross))
