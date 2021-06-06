@@ -57,7 +57,7 @@ For any kind of issue or suggestion please contact me trough the support discord
 
 `s!serverinfo`\
 \
-![serverinfo command](https://imgur.com/a/gMqgkKL)
+![serverinfo command](https://imgur.com/I6iyrN3)
 \
 \
 \
