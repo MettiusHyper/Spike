@@ -94,6 +94,8 @@ class Setup(commands.Cog):
                 except:
                     pass
                 if (type(command) == int and len(str(command)) == 18) and ctx.guild.get_channel(command) != None:
+                    if ctx.guild.get_channel(command).type != discord.ChannelType.text:
+                        return await ctx.send("{} please specify only text channels".format(Emoji.cross))
                     logs.update({logsNames[str(reaction)].lower() : command})
                     collection.update_one({"_id": ctx.guild.id}, {"$set": {"logs" : logs}})
                     await ctx.send("{} Channel has been setted".format(Emoji.tick))
@@ -104,7 +106,6 @@ class Setup(commands.Cog):
                     await ctx.send("{} No channel has been previusly setted.".format(Emoji.cross))
                 else:
                     del logs[logsNames[str(reaction)].lower()]
-                    print(logs)
                     collection.update_one({"_id": ctx.guild.id}, {"$set": {"settings" : logs}})
                     await ctx.send("{} Channel has been removed from the bot's settings".format(Emoji.tick))
             raise asyncio.TimeoutError
