@@ -106,7 +106,7 @@ class Setup(commands.Cog):
                     await ctx.send("{} No channel has been previusly setted.".format(Emoji.cross))
                 else:
                     del logs[logsNames[str(reaction)].lower()]
-                    collection.update_one({"_id": ctx.guild.id}, {"$set": {"settings" : logs}})
+                    collection.update_one({"_id": ctx.guild.id}, {"$set": {"logs" : logs}})
                     await ctx.send("{} Channel has been removed from the bot's settings".format(Emoji.tick))
             raise asyncio.TimeoutError
         except asyncio.TimeoutError:
