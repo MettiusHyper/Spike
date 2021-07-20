@@ -122,6 +122,9 @@ class Events(commands.Cog):
         elif isinstance(exception, commands.DisabledCommand):
             return await ctx.send("{cross} This command is currently disabled, try again later".format(cross = Emoji.cross))
         
+        elif isinstance(exception, commands.Forbidden):
+            return await ctx.send("{cross} The bot doesn't have the permission to execute the command".format(cross = Emoji.cross))
+        
         await errorFormat(self.client, exception)
 
     @commands.Cog.listener()
