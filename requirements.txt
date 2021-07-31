@@ -1,6 +1,8 @@
-discord.py
+discord
 pymongo
 dnspython
 requests
-matplotlib
 dblpy
+matplotlib
+pytimeparse
+humanfriendly
